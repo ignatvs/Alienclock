@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html{
+            display: flex;
+            flex-flow: row nowrap;  
+            justify-content: center;
+            align-content: center;align-items: center;
+            height:20%;
+            margin: 0;
+            padding: 50;
+            align-items: center;
+        }
+        body{background-color: rgb(24, 0, 0); align-items: center; justify-content: center;}
+         #myDIV{
+            filter: drop-shadow(0px 0px 15px lime); width: 260px; height: 100px;
+            margin-top:0px;background-color:rgb(0, 0, 0); align-items: center;
+            border-radius: 10% 10%;
+        }
+        svg{
+            width: 260px;filter: drop-shadow(0px 0px 8px rgba(169, 211, 17,0.8));
+        }
+        .poloff{
+            fill:#652222;stroke:#772222;stroke-width:1;width:70px;height:70px;
+        }
+        .polon{
+            filter: drop-shadow(0px 0px 8px rgba(255, 17, 17,0.0));
+            fill:#ff0b0b;stroke:lime;stroke-width:0.5;
+        }
+        .div1{width: auto;height: auto; font-family: cursive;
+          font-size: 16pt; padding-left:80px;
+          color: limegreen;
+          text-shadow: 2px 0 #fff, 2px 0 #070, 0 2px #090,
+               1px 1px #f00, 1px 1px #f00;
+              }
+              .div2{width: auto;height: auto; font-family: cursive;
+          font-size: 8pt; padding-left:80px;
+          color: limegreen;
+          text-shadow: 2px 0 #fff, -2px 0 #070, 0 2px #090,
+               1px -2px #f00, -2px 1px #f00;
+              }
+    </style>
+    <body>
+      <br><br><br><br><br><br><br><br><br><br><br><br>
+      <div id="llh" class="div1" onmouseenter="playa()"
+       onmouseleave="pausea()">Predator</div>
+      <br>
+      <div id="myDIV"></div>
+      <div class="div2" style="font-size: 8pt;">Fantastic Alien Clock</div>
+      <audio id="myAudio">
+        <source src="boom.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <script>
+        var elp = "";
+        var x = document.getElementById("myAudio"); 
+        
+        function playa() { 
+          x.play(); 
+        } 
+        
+        function pausea() { 
+          x.pause(); 
+        } 
+
+          var xmlns = "http://www.w3.org/2000/svg";
+          var svg = document.createElementNS(xmlns, "svg");
+          var pol = [];
+          var pun = [];
+          var pun1 = [];
+          var pun2 = [];
+          var pun3 = [];
+          var cex = [];
+          var cey = [];
+          var cen = [];
+          var p = 1;
+          var k, p1, p2, p3, ra=30;
+          var an = Math.PI * 15 / 180;
+          for (i = 1; i<=3; i++){
+            cex[i] = 50 + (i -1) * 80;
+            cey[i] = 50;
+            cen[i] = cex[i].toString() + "," + cey[i].toString();
+            k = 1;
+            for (j = 1; j<=12; j++){
+              if (i==1)
+                pun1[j] = ((cex[i] + ra * Math.cos(k*an))).toString() + "," + ((cey[i] + ra * Math.sin(k*an))).toString();
+              else if (i ==2)
+                pun2[j] = ((cex[i] + ra * Math.cos(k*an))).toString() + "," + ((cey[i] + ra * Math.sin(k*an))).toString();
+              else                    
+                pun3[j] = ((cex[i] + ra * Math.cos(k*an))).toString() + "," + ((cey[i] + ra * Math.sin(k*an))).toString();
+              k += 2;
+            }
+          }
+          for (p = 1; p <= 18; p++){
+            pol[p] = document.createElementNS(xmlns, "polygon");
+          }
+          var punt = [];
+          var j, m;
+          for (i = 1; i<=3; i++){
+            if (i == 1){
+              punt = pun1;
+              j = 1;
+            }
+            else if (i == 2){
+              punt = pun2;
+              j = 7;
+            }
+            else if (i == 3){
+              punt = pun3;
+              j = 13;
+            }
+            m = 1;
+            for (k = j; k <= j+6; k++){
+              if (k == 19) break;
+              pun[k] = cen[i] + " " + punt[m] + " " + punt[m+1];
+              pol[k].setAttribute("id","pol" + k);
+              pol[k].setAttribute("class","poloff");
+              pol[k].setAttribute("points",pun[k]);
+              svg.appendChild(pol[k]);
+              m += 2;
+              if (m > 12)
+                m = 1;
+            }
+          }
+          document.getElementById("myDIV").appendChild(svg);
+      function abin(){
+        var lab = "";
+        var da = (((Date()).split(" "))[4]).split(':');
+        for(j=0; j <=2; j++){
+          var res = "";
+          num = da[j];
+          do {
+            coe = Math.trunc(num / 2);
+            num = num%2;
+            res = res + num.toString();
+            num = coe;
+          } while (num > 0);
+          var la =  6 - res.length;
+          var mas = res;
+          for(i = 1; i <= la; i++)
+            mas += "0";
+          lab += mas.split('').reverse().join('');
+        }
+        for (var i = 1; i <= lab.length; i++){
+          if (lab[i-1] == "0")
+            document.getElementById("pol"+i).setAttribute("class","poloff");
+          else
+            document.getElementById("pol"+i).setAttribute("class","polon");
+          }
+}
+      setInterval(abin, 1000);
+    </script>
+  </body>
+</html>
